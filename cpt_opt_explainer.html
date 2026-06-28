@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Navly — Your F-1 Visa Guide</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Sora:wght@600;700&display=swap');
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #0f1117;
+    --surface: #181c26;
+    --surface2: #1e2333;
+    --border: #2a2f42;
+    --accent: #6c8eff;
+    --accent2: #a78bfa;
+    --text: #e8eaf0;
+    --muted: #8b90a0;
+    --success: #34d399;
+    --warning: #fbbf24;
+    --radius: 14px;
+    --font-display: 'Sora', sans-serif;
+    --font-body: 'Inter', sans-serif;
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-body);
+    font-size: 15px;
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Header */
+  header {
+    padding: 20px 24px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: var(--surface);
+  }
+
+  .logo {
+    font-family: var(--font-display);
+    font-size: 22px;
+    font-weight: 700;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .logo-tag {
+    font-size: 11px;
+    color: var(--muted);
+    background: var(--surface2);
+    padding: 2px 8px;
+    border-radius: 20px;
+    border: 1px solid var(--border);
+    -webkit-text-fill-color: var(--muted);
+  }
+
+  /* Layout */
+  .container {
+    display: flex;
+    flex: 1;
+    max-width: 1100px;
+    margin: 0 auto;
+    width: 100%;
+    padding: 24px;
+    gap: 24px;
+  }
+
+  /* Sidebar */
+  .sidebar {
+    width: 240px;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .sidebar-label {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--muted);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 0 4px;
+    margin-bottom: 4px;
+  }
+
+  .topic-btn {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 11px 14px;
+    color: var(--text);
+    font-family: var(--font-body);
+    font-size: 13.5px;
+    cursor: pointer;
+    text-align: left;
+    transition: all 0.15s;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .topic-btn:hover {
+    background: var(--surface2);
+    border-color: var(--accent);
+    color: #fff;
+  }
+
+  .topic-btn.active {
+    background: rgba(108, 142, 255, 0.12);
+    border-color: var(--accent);
+    color: #fff;
+  }
+
+  .topic-icon {
+    font-size: 16px;
+    width: 20px;
+    text-align: center;
+    flex-shrink: 0;
+  }
+
+  .disclaimer {
+    margin-top: auto;
+    padding: 12px;
+    background: rgba(251, 191, 36, 0.08);
+    border: 1px solid rgba(251, 191, 36, 0.2);
+    border-radius: 10px;
+    font-size: 11.5px;
+    color: var(--warning);
+    line-height: 1.5;
+  }
+
+  /* Main */
+  main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    min-width: 0;
+  }
+
+  /* Chat area */
+  .chat-area {
+    flex: 1;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 24px;
+    overflow-y: auto;
+    min-height: 400px;
+    max-height: 520px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  /* Welcome state */
+  .welcome {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+    text-align: center;
+    gap: 16px;
+    padding: 40px 20px;
+  }
+
+  .welcome-icon {
+    font-size: 48px;
+    margin-bottom: 4px;
+  }
+
+  .welcome h2 {
+    font-family: var(--font-display);
+    font-size: 22px;
+    font-weight: 700;
+    color: #fff;
+  }
+
+  .welcome p {
+    color: var(--muted);
+    max-width: 380px;
+    font-size: 14px;
+  }
+
+  .quick-questions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+    margin-top: 8px;
+  }
+
+  .quick-btn {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 8px 14px;
+    color: var(--text);
+    font-size: 13px;
+    cursor: pointer;
+    font-family: var(--font-body);
+    transition: all 0.15s;
+  }
+
+  .quick-btn:hover {
+    border-color: var(--accent);
+    color: #fff;
+    background: rgba(108,142,255,0.1);
+  }
+
+  /* Messages */
+  .message {
+    display: flex;
+    gap: 12px;
+    animation: fadeIn 0.3s ease;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .message.user { flex-direction: row-reverse; }
+
+  .avatar {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+    font-weight: 600;
+  }
+
+  .avatar.ai {
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    color: #fff;
+    font-family: var(--font-display);
+    font-size: 13px;
+  }
+
+  .avatar.user-av {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    color: var(--muted);
+  }
+
+  .bubble {
+    max-width: 82%;
+    padding: 13px 16px;
+    border-radius: 12px;
+    font-size: 14px;
+    line-height: 1.65;
+  }
+
+  .message.ai .bubble {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    color: var(--text);
+    border-top-left-radius: 4px;
+  }
+
+  .message.user .bubble {
+    background: rgba(108, 142, 255, 0.15);
+    border: 1px solid rgba(108, 142, 255, 0.3);
+    color: #fff;
+    border-top-right-radius: 4px;
+  }
+
+  .bubble h3 {
+    font-size: 14px;
+    font-weight: 600;
+    color: #fff;
+    margin-bottom: 8px;
+    margin-top: 14px;
+  }
+
+  .bubble h3:first-child { margin-top: 0; }
+
+  .bubble ul {
+    padding-left: 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .bubble li { color: var(--text); }
+
+  .bubble strong { color: #fff; font-weight: 600; }
+
+  .bubble .tag {
+    display: inline-block;
+    background: rgba(108,142,255,0.15);
+    border: 1px solid rgba(108,142,255,0.3);
+    color: var(--accent);
+    font-size: 11px;
+    padding: 2px 8px;
+    border-radius: 20px;
+    margin: 2px 2px 6px;
+    font-weight: 500;
+  }
+
+  .bubble .step {
+    display: flex;
+    gap: 10px;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .bubble .step:last-child { border-bottom: none; }
+
+  .bubble .step-num {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: rgba(108,142,255,0.2);
+    color: var(--accent);
+    font-size: 11px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  .bubble .step-text { font-size: 13.5px; }
+  .bubble .step-text strong { display: block; margin-bottom: 2px; }
+
+  .bubble .alert {
+    background: rgba(251,191,36,0.08);
+    border: 1px solid rgba(251,191,36,0.2);
+    border-radius: 8px;
+    padding: 10px 12px;
+    margin-top: 12px;
+    font-size: 13px;
+    color: var(--warning);
+  }
+
+  .bubble .success-note {
+    background: rgba(52,211,153,0.08);
+    border: 1px solid rgba(52,211,153,0.2);
+    border-radius: 8px;
+    padding: 10px 12px;
+    margin-top: 12px;
+    font-size: 13px;
+    color: var(--success);
+  }
+
+  /* Typing indicator */
+  .typing {
+    display: flex;
+    gap: 4px;
+    align-items: center;
+    padding: 4px 0;
+  }
+
+  .typing span {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--muted);
+    animation: bounce 1.2s infinite;
+  }
+
+  .typing span:nth-child(2) { animation-delay: 0.2s; }
+  .typing span:nth-child(3) { animation-delay: 0.4s; }
+
+  @keyframes bounce {
+    0%, 60%, 100% { transform: translateY(0); opacity: 0.4; }
+    30% { transform: translateY(-6px); opacity: 1; }
+  }
+
+  /* Input area */
+  .input-area {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 14px 16px;
+    display: flex;
+    gap: 12px;
+    align-items: flex-end;
+  }
+
+  .input-area textarea {
+    flex: 1;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: var(--text);
+    font-family: var(--font-body);
+    font-size: 14.5px;
+    resize: none;
+    line-height: 1.5;
+    min-height: 24px;
+    max-height: 120px;
+  }
+
+  .input-area textarea::placeholder { color: var(--muted); }
+
+  .send-btn {
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    border: none;
+    border-radius: 10px;
+    width: 38px;
+    height: 38px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: opacity 0.15s;
+  }
+
+  .send-btn:hover { opacity: 0.85; }
+  .send-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+  .send-btn svg {
+    width: 16px;
+    height: 16px;
+    fill: #fff;
+  }
+
+  /* Context bar */
+  .context-bar {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .context-chip {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 6px 12px;
+    font-size: 12px;
+    color: var(--muted);
+    cursor: pointer;
+    transition: all 0.15s;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .context-chip.set {
+    border-color: var(--accent);
+    color: var(--accent);
+    background: rgba(108,142,255,0.08);
+  }
+
+  .context-chip:hover { border-color: var(--accent); color: var(--text); }
+
+  @media (max-width: 700px) {
+    .container { flex-direction: column; padding: 16px; }
+    .sidebar { width: 100%; flex-direction: row; flex-wrap: wrap; }
+    .sidebar-label { width: 100%; }
+    .topic-btn { flex: 1; min-width: 140px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <span class="logo">Navly</span>
+  <span class="logo-tag">F-1 Visa AI Guide · Beta</span>
+</header>
+
+<div class="container">
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="sidebar-label">Topics</div>
+
+    <button class="topic-btn" onclick="askTopic('What is CPT? Explain it simply.')">
+      <span class="topic-icon">📋</span> What is CPT?
+    </button>
+    <button class="topic-btn" onclick="askTopic('What is OPT? Explain it simply with eligibility and process.')">
+      <span class="topic-icon">🎓</span> What is OPT?
+    </button>
+    <button class="topic-btn" onclick="askTopic('What is STEM OPT extension? Who qualifies and what is the process?')">
+      <span class="topic-icon">🔬</span> STEM OPT extension
+    </button>
+    <button class="topic-btn" onclick="askTopic('What is the full step by step OPT application process? Include all forms, deadlines and where to submit.')">
+      <span class="topic-icon">📝</span> OPT application steps
+    </button>
+    <button class="topic-btn" onclick="askTopic('What is the full CPT application process? What forms do I need and where do I go?')">
+      <span class="topic-icon">🏫</span> CPT application steps
+    </button>
+    <button class="topic-btn" onclick="askTopic('What happens if I do not get a job within 90 days of my OPT start date? What are my options?')">
+      <span class="topic-icon">⏰</span> 90-day unemployment rule
+    </button>
+    <button class="topic-btn" onclick="askTopic('What is H1B visa? How does the lottery work and when should I apply?')">
+      <span class="topic-icon">🗂️</span> H1B explained
+    </button>
+    <button class="topic-btn" onclick="askTopic('What is E-Verify and why does it matter for international students looking for jobs?')">
+      <span class="topic-icon">✅</span> E-Verify & sponsorship
+    </button>
+
+    <div class="disclaimer">
+      ⚠️ This is general information only, not legal advice. Always confirm with your DSO and consult an immigration attorney for your specific situation.
+    </div>
+  </aside>
+
+  <!-- Main -->
+  <main>
+    <!-- Context chips -->
+    <div class="context-bar">
+      <div class="context-chip" id="chip-major" onclick="setContext('major')">
+        📚 Add your major
+      </div>
+      <div class="context-chip" id="chip-grad" onclick="setContext('grad')">
+        🗓️ Add graduation date
+      </div>
+      <div class="context-chip" id="chip-status" onclick="setContext('status')">
+        📄 Add visa status
+      </div>
+    </div>
+
+    <!-- Chat area -->
+    <div class="chat-area" id="chat">
+      <div class="welcome" id="welcome">
+        <div class="welcome-icon">🌐</div>
+        <h2>Hi! I'm your F-1 visa guide.</h2>
+        <p>Ask me anything about CPT, OPT, STEM OPT, H1B, or navigating work authorization as an international student in the US.</p>
+        <div class="quick-questions">
+          <button class="quick-btn" onclick="askTopic('What is the difference between CPT and OPT?')">CPT vs OPT difference</button>
+          <button class="quick-btn" onclick="askTopic('When should I apply for OPT? What is the earliest I can apply?')">When to apply for OPT</button>
+          <button class="quick-btn" onclick="askTopic('Can I work part time on OPT? What are the rules?')">Can I work part-time on OPT?</button>
+          <button class="quick-btn" onclick="askTopic('What happens to my visa status between graduation and OPT start date?')">Gap between graduation and OPT</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Input -->
+    <div class="input-area">
+      <textarea
+        id="user-input"
+        placeholder="Ask anything about CPT, OPT, STEM OPT, H1B..."
+        rows="1"
+        onkeydown="handleKey(event)"
+        oninput="autoResize(this)"
+      ></textarea>
+      <button class="send-btn" id="send-btn" onclick="sendMessage()" title="Send">
+        <svg viewBox="0 0 24 24"><path d="M2 21l21-9L2 3v7l15 2-15 2v7z"/></svg>
+      </button>
+    </div>
+  </main>
+</div>
+
+<script>
+  let context = { major: null, grad: null, status: 'F-1 student' };
+  let isLoading = false;
+  let conversationHistory = [];
+
+  function autoResize(el) {
+    el.style.height = 'auto';
+    el.style.height = Math.min(el.scrollHeight, 120) + 'px';
+  }
+
+  function handleKey(e) {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      sendMessage();
+    }
+  }
+
+  function setContext(type) {
+    const prompts = {
+      major: 'What is your major? (e.g. Data Science, Computer Science)',
+      grad: 'What is your expected graduation date? (e.g. December 2026)',
+      status: 'What is your current visa status? (e.g. F-1 student, OPT, STEM OPT)'
+    };
+    const val = prompt(prompts[type]);
+    if (val && val.trim()) {
+      context[type] = val.trim();
+      const chip = document.getElementById('chip-' + type);
+      const labels = { major: '📚', grad: '🗓️', status: '📄' };
+      chip.textContent = labels[type] + ' ' + val.trim();
+      chip.classList.add('set');
+    }
+  }
+
+  function askTopic(question) {
+    document.getElementById('user-input').value = question;
+    sendMessage();
+  }
+
+  function buildSystemPrompt() {
+    let sys = `You are Navly, a friendly and knowledgeable AI guide for international students in the United States on F-1 visas. You explain complex immigration and work authorization topics in plain, simple English — like a smart older student who has been through it all and wants to help.
+
+Your job is to explain: CPT (Curricular Practical Training), OPT (Optional Practical Training), STEM OPT extension, H1B visa basics, E-Verify, work authorization rules, and related topics.
+
+Always be:
+- Clear and direct — no jargon without explanation
+- Structured — use numbered steps when explaining processes
+- Honest — if something is complex or varies by university, say so
+- Encouraging — this is stressful and students need support
+
+Always end responses with a reminder that this is general information and they should confirm with their DSO (Designated School Official) for their specific university's process.
+
+Never give specific legal advice about individual cases. You provide general educational information only.`;
+
+    if (context.major || context.grad || context.status) {
+      sys += '\n\nStudent context:';
+      if (context.major) sys += `\n- Major: ${context.major}`;
+      if (context.grad) sys += `\n- Graduation: ${context.grad}`;
+      if (context.status) sys += `\n- Status: ${context.status}`;
+      sys += '\n\nWhen relevant, tailor your answer to this student\'s situation — especially for STEM OPT eligibility based on their major, or timing based on their graduation date.';
+    }
+
+    return sys;
+  }
+
+  async function sendMessage() {
+    const input = document.getElementById('user-input');
+    const text = input.value.trim();
+    if (!text || isLoading) return;
+
+    // Hide welcome
+    const welcome = document.getElementById('welcome');
+    if (welcome) welcome.remove();
+
+    // Add user message
+    addMessage('user', text);
+    conversationHistory.push({ role: 'user', content: text });
+    input.value = '';
+    input.style.height = 'auto';
+
+    // Show typing
+    isLoading = true;
+    document.getElementById('send-btn').disabled = true;
+    const typingEl = addTyping();
+
+    try {
+      const response = await fetch('https://api.anthropic.com/v1/messages', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          model: 'claude-sonnet-4-6',
+          max_tokens: 1000,
+          system: buildSystemPrompt(),
+          messages: conversationHistory
+        })
+      });
+
+      const data = await response.json();
+      typingEl.remove();
+
+      const aiText = data.content?.[0]?.text || 'Sorry, I could not get a response. Please try again.';
+      conversationHistory.push({ role: 'assistant', content: aiText });
+      addMessage('ai', aiText);
+
+    } catch (err) {
+      typingEl.remove();
+      addMessage('ai', 'Something went wrong connecting to the AI. Please check your connection and try again.');
+    }
+
+    isLoading = false;
+    document.getElementById('send-btn').disabled = false;
+  }
+
+  function addMessage(role, text) {
+    const chat = document.getElementById('chat');
+    const div = document.createElement('div');
+    div.className = `message ${role}`;
+
+    const avatar = document.createElement('div');
+    avatar.className = role === 'ai' ? 'avatar ai' : 'avatar user-av';
+    avatar.textContent = role === 'ai' ? 'N' : '👤';
+
+    const bubble = document.createElement('div');
+    bubble.className = 'bubble';
+
+    if (role === 'ai') {
+      bubble.innerHTML = formatAIText(text);
+    } else {
+      bubble.textContent = text;
+    }
+
+    div.appendChild(avatar);
+    div.appendChild(bubble);
+    chat.appendChild(div);
+    chat.scrollTop = chat.scrollHeight;
+    return div;
+  }
+
+  function addTyping() {
+    const chat = document.getElementById('chat');
+    const div = document.createElement('div');
+    div.className = 'message ai';
+    div.innerHTML = `
+      <div class="avatar ai">N</div>
+      <div class="bubble">
+        <div class="typing">
+          <span></span><span></span><span></span>
+        </div>
+      </div>`;
+    chat.appendChild(div);
+    chat.scrollTop = chat.scrollHeight;
+    return div;
+  }
+
+  function formatAIText(text) {
+    // Convert markdown-like formatting to HTML
+    let html = text
+      // Bold
+      .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+      // Headers
+      .replace(/^### (.*?)$/gm, '<h3>$1</h3>')
+      .replace(/^## (.*?)$/gm, '<h3>$1</h3>')
+      // Numbered lists
+      .replace(/^\d+\.\s+\*\*(.*?)\*\*(.*?)$/gm, (_, title, rest) => `
+        <div class="step">
+          <div class="step-num">${'•'}</div>
+          <div class="step-text"><strong>${title}</strong>${rest}</div>
+        </div>`)
+      // Bullet lists
+      .replace(/^[-•]\s+(.*?)$/gm, '<li>$1</li>')
+      // Wrap consecutive li items
+      .replace(/(<li>.*?<\/li>\n?)+/gs, m => `<ul>${m}</ul>`)
+      // Alert patterns
+      .replace(/⚠️(.*?)$/gm, '<div class="alert">⚠️$1</div>')
+      .replace(/✅(.*?)$/gm, '<div class="success-note">✅$1</div>')
+      // Paragraphs
+      .replace(/\n\n/g, '</p><p>')
+      .replace(/\n/g, '<br>');
+
+    return `<p>${html}</p>`;
+  }
+</script>
+</body>
+</html>
